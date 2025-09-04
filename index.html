@@ -21,6 +21,8 @@
         .cursor-dot, .cursor-dot-outline {
             pointer-events: none;
             position: fixed;
+            top: 0;
+            left: 0;
             border-radius: 50%;
             z-index: 9999;
             mix-blend-mode: difference;
@@ -34,10 +36,6 @@
             width: 40px;
             height: 40px;
             border: 2px solid #fff;
-            transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
-        }
-        .cursor-dot-outline.hovered {
-            transform: scale(1.5);
         }
 
         #hero-img {
@@ -648,28 +646,66 @@
         });
 
 
-        // --- CURSOR ---
+        // --- MAGNETIC CURSOR ---
         const cursorDot = document.querySelector(".cursor-dot");
         const cursorDotOutline = document.querySelector(".cursor-dot-outline");
-        const hoverables = document.querySelectorAll("a, button, .skill-bubble, .timeline-item");
+        const hoverables = document.querySelectorAll("a, button, .skill-bubble, .project-card, .profile-card, .timeline-item");
 
-        window.addEventListener("mousemove", function (e) {
-            const posX = e.clientX;
-            const posY = e.clientY;
-            gsap.set(cursorDot, { x: posX - 4, y: posY - 4 });
-            gsap.to(cursorDotOutline, { duration: 0.2, x: posX - 20, y: posY - 20 });
+        let isHovering = false;
+        let mouseX = 0;
+        let mouseY = 0;
+        
+        gsap.set(cursorDot, { xPercent: -50, yPercent: -50 });
+        gsap.set(cursorDotOutline, { xPercent: -50, yPercent: -50 });
+
+        window.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            gsap.to(cursorDot, { duration: 0.1, x: mouseX, y: mouseY });
+            if (!isHovering) {
+                gsap.to(cursorDotOutline, { duration: 0.3, x: mouseX, y: mouseY });
+            }
         });
 
         hoverables.forEach(el => {
-            el.addEventListener("mouseenter", () => {
-                gsap.to(cursorDotOutline, { duration: 0.2, scale: 1.5, borderColor: '#0891b2' });
-                if (el.classList.contains('skill-bubble')) {
+            el.addEventListener("mouseenter", (e) => {
+                isHovering = true;
+                const rect = el.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                
+                let scale = 1.5;
+                if (el.classList.contains('project-card') || el.classList.contains('profile-card')) {
+                    scale = 2.5;
+                }
+
+                gsap.to(cursorDotOutline, {
+                    duration: 0.3,
+                    x: centerX,
+                    y: centerY,
+                    width: rect.width * 1.1,
+                    height: rect.width * 1.1,
+                    ease: "power2.out",
+                    borderColor: '#0891b2'
+                });
+
+                 if (el.classList.contains('skill-bubble')) {
                     gsap.to(el, { duration: 0.3, scale: 1.1, y: -5, boxShadow: '0 10px 20px rgba(0, 255, 255, 0.1)', ease: 'power2.out' });
                 }
             });
-            el.addEventListener("mouseleave", () => {
-                gsap.to(cursorDotOutline, { duration: 0.2, scale: 1, borderColor: '#fff' });
-                if (el.classList.contains('skill-bubble')) {
+            el.addEventListener("mouseleave", (e) => {
+                isHovering = false;
+                gsap.to(cursorDotOutline, {
+                    duration: 0.3,
+                    x: mouseX,
+                    y: mouseY,
+                    width: 40,
+                    height: 40,
+                    ease: "power2.out",
+                    borderColor: '#fff'
+                });
+
+                 if (el.classList.contains('skill-bubble')) {
                     gsap.to(el, { duration: 0.3, scale: 1, y: 0, boxShadow: '0 0 0 rgba(0, 0, 0, 0)', ease: 'power2.out' });
                 }
             });
@@ -780,6 +816,4 @@
     </script>
 </body>
 </html>
-
-
 
