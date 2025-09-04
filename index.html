@@ -227,39 +227,31 @@
 
         .profile-card .logo-container {
              height: 48px;
+             width: 48px;
              display: flex;
              align-items: center;
              justify-content: center;
         }
 
         /* Base styles for all icons/logos */
-        .profile-card .iconify, .profile-card .logo-wrapper {
+        .profile-card .iconify {
             transition: all 0.5s ease;
             transform: scale(1);
+            color: #9ca3af; /* Default gray color */
         }
         
-        .profile-card:hover .iconify, .profile-card:hover .logo-wrapper {
-            transform: scale(1.05);
+        .profile-card:hover .iconify {
+            transform: scale(1.1);
         }
 
         /* For single-color icons (Coursera, Kaggle) */
-        .profile-card .iconify {
-            color: #9ca3af; /* Default gray color */
-        }
         .profile-card:hover .iconify-coursera { color: #0056d2; }
         .profile-card:hover .iconify-kaggle { color: #20beff; }
+        .profile-card:hover .iconify-gcloud { color: #4285F4; }
+        .profile-card:hover .iconify-tableau { color: #00A2F3; }
         
-        /* For multi-color SVG logos (GCloud, Tableau) */
-        .profile-card .logo-wrapper {
-            filter: grayscale(100%);
-            opacity: 0.7;
-        }
-        .profile-card:hover .logo-wrapper {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
 
-        /* Coursera - Improved Books Animation */
+        /* Coursera - Books Animation */
         .profile-card--coursera .book-anim,
         .profile-card--coursera::before, 
         .profile-card--coursera::after {
@@ -282,33 +274,27 @@
         .profile-card--coursera:hover::after { bottom: 10px; opacity: 1; transform: rotate(15deg); transition-delay: 0.1s; }
         .profile-card--coursera:hover .book-anim { bottom: 25px; opacity: 1; transform: rotate(35deg) scale(1.05); transition-delay: 0.2s; }
 
-        /* Google Cloud - Improved Clouds Animation */
-        @keyframes drift {
-            from { transform: translateY(0) translateX(0); opacity: 0.8; }
-            to { transform: translateY(-80px) translateX(10px); opacity: 0; }
+        /* Google Cloud - Color Particles Animation */
+        @keyframes rise {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-80px) scale(0.5); opacity: 0; }
         }
-        .profile-card--gcloud .cloud-anim,
-        .profile-card--gcloud::before, 
-        .profile-card--gcloud::after {
-            content: '';
+        .profile-card--gcloud .g-particle {
             position: absolute;
-            background: #e0f2fe;
+            bottom: -10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            bottom: 0px; /* Start at the bottom */
-            opacity: 0; /* Initially hidden */
+            opacity: 0;
         }
-        .profile-card--gcloud::before { width: 45px; height: 45px; left: 10%; }
-        .profile-card--gcloud::after { width: 25px; height: 25px; right: 20%; }
-        .profile-card--gcloud .cloud-anim { width: 35px; height: 35px; left: 50%; transform: translateX(-50%); }
+        .profile-card--gcloud:hover .g-particle {
+             animation: rise 2s ease-out forwards;
+        }
+        .profile-card--gcloud .g-particle-1 { background-color: #4285F4; left: 20%; animation-delay: 0s; }
+        .profile-card--gcloud .g-particle-2 { background-color: #EA4335; left: 40%; animation-delay: 0.2s; }
+        .profile-card--gcloud .g-particle-3 { background-color: #FBBC05; left: 60%; animation-delay: 0.1s; }
+        .profile-card--gcloud .g-particle-4 { background-color: #34A853; left: 80%; animation-delay: 0.3s; }
 
-        .profile-card--gcloud:hover::before,
-        .profile-card--gcloud:hover::after,
-        .profile-card--gcloud:hover .cloud-anim {
-            opacity: 0; /* Reset opacity to be controlled by animation */
-            animation: drift 3s ease-out forwards;
-        }
-        .profile-card--gcloud:hover::after { animation-delay: 0.5s; animation-duration: 3.5s; }
-        .profile-card--gcloud:hover .cloud-anim { animation-delay: 1s; animation-duration: 2.5s; }
 
         /* Kaggle - Data Bits */
         .profile-card--kaggle::before {
@@ -332,13 +318,13 @@
             position: absolute;
             bottom: 0;
             width: 15px;
-            background-color: #e27c7c;
             height: 0;
             transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .profile-card--tableau .chart-bar-1 { left: 20%; transition-delay: 0s; }
-        .profile-card--tableau .chart-bar-2 { left: 45%; transition-delay: 0.1s; background-color: #a6c9a5;}
-        .profile-card--tableau .chart-bar-3 { left: 70%; transition-delay: 0.2s; background-color: #89bfe5;}
+        .profile-card--tableau .chart-bar-1 { background-color: #00A2F3; left: 20%; transition-delay: 0s; }
+        .profile-card--tableau .chart-bar-2 { background-color: #F26C4F; left: 45%; transition-delay: 0.1s; }
+        .profile-card--tableau .chart-bar-3 { background-color: #E8AD00; left: 70%; transition-delay: 0.2s; }
+        
         .profile-card--tableau:hover .chart-bar-1 { height: 40%; }
         .profile-card--tableau:hover .chart-bar-2 { height: 60%; }
         .profile-card--tableau:hover .chart-bar-3 { height: 30%; }
@@ -540,18 +526,14 @@
                     </a>
                     <!-- Google Cloud Skills Boost -->
                     <a href="https://www.cloudskillsboost.google/public_profiles/12fa2c63-8425-420b-b49d-6ec8c55ec44e" target="_blank" rel="noopener noreferrer" class="profile-card profile-card--gcloud glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3 fade-in-initial">
-                        <div class="logo-container logo-wrapper">
-                           <svg class="h-auto" style="height: 24px;" viewBox="0 0 170 30" xmlns="http://www.w3.org/2000/svg">
-                                <text y="22" font-family="Inter, sans-serif" font-size="22" font-weight="500">
-                                    <tspan fill="#4285F4">G</tspan><tspan fill="#EA4335">o</tspan><tspan fill="#FBBC05">o</tspan><tspan fill="#4285F4">g</tspan><tspan fill="#34A853">l</tspan><tspan fill="#EA4335">e</tspan>
-                                </text>
-                                <text x="75" y="22" font-family="Inter, sans-serif" font-size="22" font-weight="400" fill="#5F6368">
-                                    Cloud
-                                </text>
-                            </svg>
+                        <div class="logo-container">
+                           <span class="iconify iconify-gcloud w-12 h-12" data-icon="simple-icons:googlecloud"></span>
                         </div>
                         <span class="font-semibold text-white">Google Cloud</span>
-                        <span class="cloud-anim"></span>
+                        <div class="g-particle g-particle-1"></div>
+                        <div class="g-particle g-particle-2"></div>
+                        <div class="g-particle g-particle-3"></div>
+                        <div class="g-particle g-particle-4"></div>
                     </a>
                     <!-- Kaggle -->
                     <a href="https://www.kaggle.com/priyangshumukherjee" target="_blank" rel="noopener noreferrer" class="profile-card profile-card--kaggle glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3 fade-in-initial">
@@ -562,16 +544,8 @@
                     </a>
                     <!-- Tableau -->
                     <a href="https://public.tableau.com/app/profile/priyangshu.mukherjee/vizzes" target="_blank" rel="noopener noreferrer" class="profile-card profile-card--tableau glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3 fade-in-initial">
-                        <div class="logo-container logo-wrapper">
-                            <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g>
-                                    <path d="M49.9992 37.4998L49.9992 24.9998L62.4992 24.9998L62.4992 37.4998L74.9992 37.4998L74.9992 49.9998L62.4992 49.9998L62.4992 62.4998L49.9992 62.4998L49.9992 49.9998L37.4992 49.9998L37.4992 37.4998L49.9992 37.4998Z" fill="#E8AD00"></path>
-                                    <path d="M74.9992 62.4998L62.4992 62.4998L62.4992 74.9998L74.9992 74.9998L74.9992 87.4998L87.4992 87.4998L87.4992 74.9998L99.9992 74.9998L99.9992 62.4998L87.4992 62.4998L87.4992 49.9998L74.9992 49.9998L74.9992 62.4998Z" fill="#00A2F3"></path>
-                                    <path d="M24.9992 62.4998L12.4992 62.4998L12.4992 74.9998L24.9992 74.9998L24.9992 87.4998L37.4992 87.4998L37.4992 74.9998L49.9992 74.9998L49.9992 62.4998L37.4992 62.4998L37.4992 49.9998L24.9992 49.9998L24.9992 62.4998Z" fill="#785A9A"></path>
-                                    <path d="M24.9992 12.4998L12.4992 12.4998L12.4992 24.9998L24.9992 24.9998L24.9992 37.4998L37.4992 37.4998L37.4992 24.9998L49.9992 24.9998L49.9992 12.4998L37.4992 12.4998L37.4992 -0.000198364L24.9992 -0.000198364L24.9992 12.4998Z" fill="#F26C4F"></path>
-                                    <path d="M74.9992 12.4998L62.4992 12.4998L62.4992 24.9998L74.9992 24.9998L74.9992 37.4998L87.4992 37.4998L87.4992 24.9998L99.9992 24.9998L99.9992 12.4998L87.4992 12.4998L87.4992 -0.000198364L74.9992 -0.000198364L74.9992 12.4998Z" fill="#76B74A"></path>
-                                </g>
-                            </svg>
+                        <div class="logo-container">
+                             <span class="iconify iconify-tableau w-12 h-12" data-icon="simple-icons:tableau"></span>
                         </div>
                         <span class="font-semibold text-white">Tableau Public</span>
                         <span class="chart-bar chart-bar-1"></span>
