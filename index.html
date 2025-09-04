@@ -57,16 +57,14 @@
 
         .skill-bubble {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative; /* Add for stacking context */
-            z-index: 10; /* Ensures hover state is not interrupted */
+            position: relative; 
+            z-index: 10; 
         }
-
-        /* The :hover rule has been removed from here and is now handled by GSAP for reliability */
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -31px; /* Adjusted for centering */
+            left: -31px; 
             top: 5px;
             width: 22px;
             height: 22px;
@@ -142,14 +140,21 @@
             color: #fff;
         }
         
-        /* THE FIX: Prevents animation containers from collapsing to zero height when their children are hidden */
-        #project-cards, #profile-cards {
-            min-height: 1px;
-        }
-        
         /* Hide overflow for animations */
         .anim-container {
             overflow: hidden;
+        }
+
+        /* --- ALTERNATIVE ANIMATION METHOD --- */
+        .fade-in-initial {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .fade-in-initial.is-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         
     </style>
@@ -234,8 +239,8 @@
         <section id="projects">
             <div class="container mx-auto px-6">
                 <div class="anim-container"><h2 class="section-title">Projects</h2></div>
-                <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto" id="project-cards">
-                    <a href="https://auraflaa.github.io/Olist-Customer-Satisfaction-Analysis/" target="_blank" rel="noopener noreferrer" class="block glass-card rounded-lg p-6 flex flex-col hover:border-cyan-400 transition-all duration-300">
+                <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    <a href="https://auraflaa.github.io/Olist-Customer-Satisfaction-Analysis/" target="_blank" rel="noopener noreferrer" class="block glass-card rounded-lg p-6 flex flex-col hover:border-cyan-400 transition-all duration-300 fade-in-initial">
                         <h3 class="text-xl font-bold text-white mb-2">Olist Customer Satisfaction Analysis</h3>
                         <p class="text-slate-400 mb-4 flex-grow">End-to-end data analysis of 100,000 orders to identify key drivers of dissatisfaction. The findings pointed to late deliveries, leading to actionable recommendations.</p>
                         <div class="flex flex-wrap gap-2">
@@ -244,7 +249,7 @@
                             <span class="bg-cyan-900/50 text-cyan-300 text-sm font-medium px-3 py-1 rounded-full">Tableau</span>
                         </div>
                     </a>
-                    <a href="https://github.com/auraflaa/Inventory_Management_DB-Project" target="_blank" rel="noopener noreferrer" class="block glass-card rounded-lg p-6 flex flex-col hover:border-cyan-400 transition-all duration-300">
+                    <a href="https://github.com/auraflaa/Inventory_Management_DB-Project" target="_blank" rel="noopener noreferrer" class="block glass-card rounded-lg p-6 flex flex-col hover:border-cyan-400 transition-all duration-300 fade-in-initial">
                         <h3 class="text-xl font-bold text-white mb-2">Inventory Management Database System (Capstone)</h3>
                         <p class="text-slate-400 mb-4 flex-grow">A solo Flask-based web app with a normalized MySQL schema and RESTful APIs. Features RBAC, security enhancements, and a real-time analytics dashboard. (AI-assisted development).</p>
                         <div class="flex flex-wrap gap-2">
@@ -307,24 +312,24 @@
         <section id="profiles" class="bg-slate-900/50">
             <div class="container mx-auto px-6">
                 <div class="anim-container"><h2 class="section-title">Find Me On</h2></div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto" id="profile-cards">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
                     <!-- Coursera -->
-                    <a href="https://www.coursera.org/user/10de8f4ca45cb85078093228f6379d24" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                    <a href="https://www.coursera.org/user/10de8f4ca45cb85078093228f6379d24" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3 fade-in-initial">
                          <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.003 3.003c-5.32 0-8.915 3.328-8.915 8.915 0 5.32 3.327 9.085 8.915 9.085 5.235 0 8.915-3.68 8.915-9.085C20.92 6.416 17.41 3.003 12.004 3.003h-.002zm-3.17 12.164v-6.33c0-.416.084-.666.583-.666.5 0 .584.25.584.666v6.33c0 .416-.084.666-.584.666-.5 0-.583-.25-.583-.666zm6.33-2.912c0 1.25-.667 2.08-1.917 2.08-1.166 0-1.833-.667-1.833-2.08v-.583c0-1.334.667-2.08 1.833-2.08 1.25 0 1.917.75 1.917 2.08v.583z"/></svg>
                         <span class="font-semibold text-white">Coursera</span>
                     </a>
                     <!-- Google Cloud Skills Boost -->
-                    <a href="https://www.cloudskillsboost.google/public_profiles/12fa2c63-8425-420b-b49d-6ec8c55ec44e" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                    <a href="https://www.cloudskillsboost.google/public_profiles/12fa2c63-8425-420b-b49d-6ec8c55ec44e" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3 fade-in-initial">
                         <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.453.352l-5.83 3.332a.267.267 0 00-.134.231V9.75a.267.267 0 00.134.231l5.83 3.332a.267.267 0 00.267 0l5.83-3.332a.267.267 0 00.134-.231V3.915a.267.267 0 00-.134-.231L12.72.352a.267.267 0 00-.267 0zM21.24 8.783l-5.83 3.331a.267.267 0 01-.267 0L9.313 8.783a.267.267 0 00-.267 0L3.216 12.115a.267.267 0 00-.134.231v6.53a.267.267 0 00.134.231l5.83 3.332a.267.267 0 00.267 0l5.83-3.332a.267.267 0 00.134-.231v-2.086l-2.915-1.666a.267.267 0 01-.134-.231v-2.17a.267.267 0 01.134-.231l2.915-1.666a.267.267 0 00.267 0l5.83-3.332a.267.267 0 00.134-.231v-2.17a.267.267 0 00-.134-.231l-2.915-1.666a.267.267 0 00-.267 0z"/></svg>
                         <span class="font-semibold text-white">Google Cloud</span>
                     </a>
                     <!-- Kaggle -->
-                    <a href="https://www.kaggle.com/priyangshumukherjee" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                    <a href="https://www.kaggle.com/priyangshumukherjee" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3 fade-in-initial">
                          <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.616 15.384l-2.616-2.616 2.616-2.616 1.848 1.848 3.168-3.168L14.04 1.848 12 0l-2.04 1.848-7.08 7.08 3.168 3.168L1.848 16.296l7.08 7.08L12 21.336l2.04 2.04 7.08-7.08-3.168-3.168-3.336 2.184z"/></svg>
                         <span class="font-semibold text-white">Kaggle</span>
                     </a>
                     <!-- Tableau -->
-                    <a href="https://public.tableau.com/app/profile/priyangshu.mukherjee/vizzes" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                    <a href="https://public.tableau.com/app/profile/priyangshu.mukherjee/vizzes" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3 fade-in-initial">
                         <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.8 11.52h14.4v2.4H4.8V11.52zm0-6.24h6.24v5.04H4.8V5.28zm7.44 0h6.96v5.04h-6.96V5.28zM4.8 15.12h6.24v5.04H4.8v-5.04zm7.44 0h6.96v5.04h-6.96v-5.04z"/></svg>
                         <span class="font-semibold text-white">Tableau Public</span>
                     </a>
@@ -336,10 +341,10 @@
         <section id="contact" class="text-center bg-slate-900/50">
             <div class="container mx-auto px-6">
                 <div class="anim-container"><h2 class="section-title">Get In Touch</h2></div>
-                <p class="max-w-xl mx-auto text-lg text-slate-300 mb-8" id="contact-text">
+                <p class="max-w-xl mx-auto text-lg text-slate-300 mb-8 fade-in-initial" id="contact-text">
                     I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team.
                 </p>
-                <a href="mailto:priyangshu.mukherjee.dev@email.com" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg" id="contact-button">
+                <a href="mailto:priyangshu.mukherjee.dev@email.com" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg fade-in-initial" id="contact-button">
                     Say Hello
                 </a>
             </div>
@@ -364,9 +369,6 @@
         window.addEventListener("mousemove", function (e) {
             const posX = e.clientX;
             const posY = e.clientY;
-
-            // Center the dot (8px) and outline (40px) on the cursor
-            // by offsetting them by half their width. This ensures perfect alignment.
             gsap.set(cursorDot, { x: posX - 4, y: posY - 4 });
             gsap.to(cursorDotOutline, { duration: 0.2, x: posX - 20, y: posY - 20 });
         });
@@ -374,38 +376,20 @@
         hoverables.forEach(el => {
             el.addEventListener("mouseenter", () => {
                 gsap.to(cursorDotOutline, { duration: 0.2, scale: 1.5, borderColor: '#0891b2' });
-                // If the hovered element is a skill bubble, animate it with GSAP
                 if (el.classList.contains('skill-bubble')) {
-                    gsap.to(el, {
-                        duration: 0.3,
-                        scale: 1.1,
-                        y: -5,
-                        boxShadow: '0 10px 20px rgba(0, 255, 255, 0.1)',
-                        ease: 'power2.out'
-                    });
+                    gsap.to(el, { duration: 0.3, scale: 1.1, y: -5, boxShadow: '0 10px 20px rgba(0, 255, 255, 0.1)', ease: 'power2.out' });
                 }
             });
             el.addEventListener("mouseleave", () => {
                 gsap.to(cursorDotOutline, { duration: 0.2, scale: 1, borderColor: '#fff' });
-                // If the hovered element is a skill bubble, animate it back
                 if (el.classList.contains('skill-bubble')) {
-                    gsap.to(el, {
-                        duration: 0.3,
-                        scale: 1,
-                        y: 0,
-                        boxShadow: '0 0 0 rgba(0, 0, 0, 0)',
-                        ease: 'power2.out'
-                    });
+                    gsap.to(el, { duration: 0.3, scale: 1, y: 0, boxShadow: '0 0 0 rgba(0, 0, 0, 0)', ease: 'power2.out' });
                 }
             });
         });
 
         // Particles.js config
-        particlesJS('particles-js', {
-            "particles": { "number": { "value": 60 }, "color": { "value": "#0891b2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.4 }, "size": { "value": 2, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#0e7490", "opacity": 0.3 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" }},
-            "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": false } }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.7 } } }},
-            "retina_detect": true
-        });
+        particlesJS('particles-js', { "particles": { "number": { "value": 60 }, "color": { "value": "#0891b2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.4 }, "size": { "value": 2, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#0e7490", "opacity": 0.3 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" }}, "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": false } }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.7 } } }}, "retina_detect": true });
 
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
@@ -447,15 +431,8 @@
         // Section Title Animation
         gsap.utils.toArray('.section-title').forEach(title => {
             gsap.from(title, {
-                scrollTrigger: {
-                    trigger: title,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                },
-                opacity: 0,
-                y: 50,
-                duration: 0.8,
-                ease: 'power3.out'
+                scrollTrigger: { trigger: title, start: 'top 85%', toggleActions: 'play none none none' },
+                opacity: 0, y: 50, duration: 0.8, ease: 'power3.out'
             });
         });
 
@@ -470,30 +447,11 @@
             scrollTrigger: { trigger: "#skills", start: 'top 70%' },
             opacity: 0, y: 30, stagger: 0.1, duration: 0.5, ease: 'back.out(1.7)'
         });
-
-        // Projects Animation
-        gsap.from("#project-cards > a", {
-            scrollTrigger: { 
-                trigger: "#projects", // FIX: Trigger is now the parent section, not the collapsing container.
-                start: 'top 70%',
-                toggleActions: 'play none none none'
-            },
-            autoAlpha: 0, 
-            y: 50, 
-            stagger: 0.2, 
-            duration: 0.8, 
-            ease: 'power3.out'
-        });
         
         // Timeline Animation
         const timeline = document.querySelector('.timeline');
         gsap.from(timeline, {
-             scrollTrigger: {
-                 trigger: timeline,
-                 start: 'top 70%',
-                 end: 'bottom 80%',
-                 scrub: 1
-             },
+             scrollTrigger: { trigger: timeline, start: 'top 70%', end: 'bottom 80%', scrub: 1 },
              scaleY: 0
         });
         gsap.utils.toArray('.timeline-item').forEach(item => {
@@ -513,43 +471,20 @@
              opacity: 0, x: 50, duration: 1
         });
         
-        // Profile Cards Animation
-        gsap.from("#profile-cards > a", {
-            scrollTrigger: { 
-                trigger: "#profiles", // FIX: Trigger is now the parent section.
-                start: 'top 70%',
-                toggleActions: 'play none none none'
-            },
-            autoAlpha: 0,
-            y: 40, 
-            stagger: 0.15, 
-            duration: 0.6, 
-            ease: 'power2.out'
-        });
-
-        // Contact Section Animation
-        gsap.from(["#contact-text", "#contact-button"], {
-            scrollTrigger: { 
-                trigger: "#contact", // This was already correct, but we ensure consistency.
-                start: 'top 70%',
-                toggleActions: 'play none none none'
-            },
-            autoAlpha: 0,
-            y: 40, 
-            stagger: 0.2, 
-            duration: 1
-        });
-
-        // This is a failsafe to ensure calculations are correct after page load.
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                ScrollTrigger.refresh();
-            }, 100); // A 100ms delay is imperceptible but effective.
+        // --- NEW METHOD FOR PROBLEMATIC SECTIONS ---
+        const fadeInElements = document.querySelectorAll('.fade-in-initial');
+        fadeInElements.forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 85%',
+                    onEnter: () => el.classList.add('is-visible'),
+                    once: true // Animation only runs once
+                }
+            });
         });
 
     </script>
 </body>
 </html>
-
-
 
