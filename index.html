@@ -21,9 +21,6 @@
         .cursor-dot, .cursor-dot-outline {
             pointer-events: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             border-radius: 50%;
             z-index: 9999;
             mix-blend-mode: difference;
@@ -364,8 +361,10 @@
             const posX = e.clientX;
             const posY = e.clientY;
 
-            gsap.to(cursorDot, { duration: 0.1, x: posX, y: posY });
-            gsap.to(cursorDotOutline, { duration: 0.3, x: posX, y: posY });
+            // Center the dot (8px) and outline (40px) on the cursor
+            // by offsetting them by half their width. This ensures perfect alignment.
+            gsap.set(cursorDot, { x: posX - 4, y: posY - 4 });
+            gsap.to(cursorDotOutline, { duration: 0.2, x: posX - 20, y: posY - 20 });
         });
 
         hoverables.forEach(el => {
@@ -497,4 +496,6 @@
     </script>
 </body>
 </html>
+
+
 
