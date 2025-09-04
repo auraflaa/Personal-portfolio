@@ -61,6 +61,9 @@
             z-index: 10; 
         }
 
+        .timeline-item {
+            position: relative; /* Needed for icon positioning */
+        }
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -175,6 +178,43 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* --- Timeline Hover Animation --- */
+        .timeline-hover-icons {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100px;
+            height: 100px;
+            pointer-events: none; /* So it doesn't interfere with cursor */
+        }
+        
+        .timeline-hover-icon {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.5) rotate(-15deg);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            fill: #94a3b8;
+        }
+
+        .timeline-item:hover .timeline-hover-icon {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* Stagger the icons */
+        .timeline-item:hover .timeline-hover-icon:nth-child(1) {
+            transform: scale(1) rotate(5deg) translateX(0px) translateY(10px);
+            transition-delay: 0s;
+        }
+        .timeline-item:hover .timeline-hover-icon:nth-child(2) {
+            transform: scale(1) rotate(-8deg) translateX(35px) translateY(40px);
+            transition-delay: 0.1s;
+        }
+         .timeline-item:hover .timeline-hover-icon:nth-child(3) {
+            transform: scale(1) rotate(10deg) translateX(0) translateY(70px);
+            transition-delay: 0.2s;
+        }
         
     </style>
 </head>
@@ -286,12 +326,43 @@
             <div class="container mx-auto px-6">
                  <div class="anim-container"><h2 class="section-title">My Journey</h2></div>
                  <div class="relative max-w-2xl mx-auto pl-8 timeline">
-                    <div class="timeline-item mb-12">
+                    <div class="timeline-item mb-12 p-4 rounded-lg transition-all duration-300">
+                        <div class="timeline-hover-icons">
+                            <!-- Books Icon -->
+                            <svg class="timeline-hover-icon w-10 h-10" viewBox="0 0 24 24"><path d="M19 2H9C7.9 2 7 2.9 7 4V16C7 17.1 7.9 18 9 18H19C20.1 18 21 17.1 21 16V4C21 2.9 20.1 2 19 2ZM19 16H9V4H19V16Z M5 6V20C5 21.1 5.9 22 7 22H17V20H7V6H5Z"></path></svg>
+                            <!-- Chess Knight Icon -->
+                            <svg class="timeline-hover-icon w-10 h-10" viewBox="0 0 24 24"><path d="M12 2C10.13 3.84 9.17 6.77 9 9C12.27 9 15.33 8.17 17.5 6.5C18.06 7.93 18.06 9.43 17.5 10.5C16.94 11.57 16.03 12.44 15 13C15.5 14.57 16.5 16.83 18 19H6C7.5 16.83 8.5 14.57 9 13C7.97 12.44 7.06 11.57 6.5 10.5C5.94 9.43 5.94 7.93 6.5 6.5C8.67 8.17 11.73 9 15 9C14.83 6.77 13.87 3.84 12 2Z"></path></svg>
+                        </div>
                         <h3 class="text-xl font-bold text-white">B.Tech, Computer Science and Engineering</h3>
                         <p class="text-cyan-400 font-medium mb-1">RV University</p>
                         <p class="text-slate-400">Ongoing coursework with focus areas in AI, ML, Data Science, and Cloud Computing. Heavily involved in tech communities and leadership roles.</p>
                     </div>
-                    <div class="timeline-item">
+                    <div class="timeline-item p-4 rounded-lg transition-all duration-300">
+                         <div class="timeline-hover-icons">
+                            <!-- Sleeping Anime Boy Icon -->
+                            <svg class="timeline-hover-icon w-24 h-24" viewBox="0 0 100 100">
+                                <!-- Books -->
+                                <path fill="#94a3b8" d="M20 75h60v5H20z"></path>
+                                <path fill="#a3b2c1" d="M22 70h56v5H22z"></path>
+                                <path fill="#94a3b8" d="M20 65h60v5H20z"></path>
+                                <path fill="#a3b2c1" d="M22 60h56v5H22z"></path>
+                                <!-- Head -->
+                                <circle cx="50" cy="45" r="15" fill="#2d3748"></circle>
+                                <!-- Hair -->
+                                <path fill="#1a202c" d="M35 45 Q50 25 65 45 A15 15 0 0 1 35 45"></path>
+                                <!-- Glasses -->
+                                <circle cx="43" cy="46" r="4" stroke="#e2e8f0" stroke-width="1" fill="none"></circle>
+                                <circle cx="57" cy="46" r="4" stroke="#e2e8f0" stroke-width="1" fill="none"></circle>
+                                <line x1="47" y1="46" x2="53" y2="46" stroke="#e2e8f0" stroke-width="1"></line>
+                                <!-- Eyes (closed) -->
+                                <path d="M41 47 q2 -2 4 0" stroke="#e2e8f0" stroke-width="1" fill="none"></path>
+                                <path d="M55 47 q2 -2 4 0" stroke="#e2e8f0" stroke-width="1" fill="none"></path>
+                                <!-- Zzz text -->
+                                <text x="70" y="35" font-family="monospace" font-size="12" fill="#94a3b8" class="timeline-hover-icon" style="transition-delay: 0.1s;">z</text>
+                                <text x="75" y="30" font-family="monospace" font-size="14" fill="#94a3b8" class="timeline-hover-icon" style="transition-delay: 0.2s;">z</text>
+                                <text x="82" y="25" font-family="monospace" font-size="16" fill="#94a3b8" class="timeline-hover-icon" style="transition-delay: 0.3s;">Z</text>
+                            </svg>
+                        </div>
                         <h3 class="text-xl font-bold text-white">Pre-University College</h3>
                         <p class="text-cyan-400 font-medium mb-1">S.G.P.T.A PU College</p>
                         <p class="text-slate-400">Contributed to foundational and advanced learning, fostering an environment of academic excellence.</p>
@@ -385,7 +456,7 @@
         // --- CURSOR ---
         const cursorDot = document.querySelector(".cursor-dot");
         const cursorDotOutline = document.querySelector(".cursor-dot-outline");
-        const hoverables = document.querySelectorAll("a, button, .skill-bubble");
+        const hoverables = document.querySelectorAll("a, button, .skill-bubble, .timeline-item");
 
         window.addEventListener("mousemove", function (e) {
             const posX = e.clientX;
