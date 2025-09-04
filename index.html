@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priyangshu Mukherjee | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #e2e8f0;
+            cursor: none; /* Hide the default cursor */
+        }
+        
+        /* Custom Cursor */
+        .cursor-dot, .cursor-dot-outline {
+            pointer-events: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            mix-blend-mode: difference;
+        }
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+        }
+        .cursor-dot-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #fff;
+            transition: transform 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
+        }
+        .cursor-dot-outline.hovered {
+            transform: scale(1.5);
+        }
+
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s, border 0.3s;
+        }
+        
+        header.scrolled {
+             background: rgba(15, 23, 42, 0.8);
+             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .skill-bubble {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-bubble:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.1);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -31px; /* Adjusted for centering */
+            top: 5px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background-color: #0891b2;
+            border: 4px solid #1e293b;
+            z-index: 1;
+        }
+        
+        .timeline::before {
+             content: '';
+             position: absolute;
+             left: -21px;
+             top: 5px;
+             bottom: 5px;
+             width: 2px;
+             background-color: #1e293b;
+             transform-origin: top;
+        }
+
+        .animated-gradient {
+            background: linear-gradient(-45deg, #0f172a, #0c4a6e, #0369a1, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0891b2;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        section {
+            padding-top: 100px;
+            padding-bottom: 100px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 4rem;
+            color: #fff;
+        }
+        
+        /* Hide overflow for animations */
+        .anim-container {
+            overflow: hidden;
+        }
+        
+    </style>
+</head>
+
+<body class="antialiased">
+    <div class="cursor-dot-outline"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-card">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-white">P.M.</h1>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#about" class="nav-link text-slate-300 hover:text-white">About</a>
+                <a href="#skills" class="nav-link text-slate-300 hover:text-white">Skills</a>
+                <a href="#projects" class="nav-link text-slate-300 hover:text-white">Projects</a>
+                <a href="#experience" class="nav-link text-slate-300 hover:text-white">Experience</a>
+                <a href="#profiles" class="nav-link text-slate-300 hover:text-white">Profiles</a>
+                <a href="#contact" class="nav-link text-slate-300 hover:text-white">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden">
+             <a href="#about" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">About</a>
+             <a href="#skills" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">Skills</a>
+             <a href="#projects" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">Projects</a>
+             <a href="#experience" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">Experience</a>
+             <a href="#profiles" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">Profiles</a>
+             <a href="#contact" class="block py-2 px-6 text-slate-300 hover:bg-slate-800">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden animated-gradient p-0">
+            <div id="particles-js"></div>
+            <div class="relative z-10 p-6">
+                <img src="https://raw.githubusercontent.com/auraflaa/Personal-portfolio/main/Resources/Profile%20Picture.jpg" alt="Priyangshu Mukherjee" class="w-36 h-36 rounded-full mx-auto mb-6 border-4 border-slate-700 shadow-lg" id="hero-img">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-2" id="hero-title">
+                    Priyangshu Mukherjee
+                </h2>
+                <p class="text-lg md:text-xl text-cyan-300 font-medium mb-6 max-w-3xl mx-auto" id="hero-subtitle">
+                    Computer Science and Engineering student at RV University | AI, ML, Data Science, Cloud Computing | Leadership in tech communities
+                </p>
+                <div class="flex justify-center space-x-6" id="hero-links">
+                    <a href="https://github.com/auraflaa" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" class="text-slate-300 hover:text-cyan-400 transition-colors"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg></a>
+                    <a href="https://www.linkedin.com/in/priyangshu-mukherjee/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile" class="text-slate-300 hover:text-cyan-400 transition-colors"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container mx-auto px-6">
+            <div class="anim-container"><h2 class="section-title">About Me</h2></div>
+            <div class="max-w-4xl mx-auto text-center text-slate-300 text-lg leading-relaxed">
+                <p id="about-text">Motivated B.Tech student specializing in AI/ML, Data Science, and Cloud Computing. I have hands-on project experience across inventory management, e-commerce data analysis, and a capstone web application. I am a strong believer in continuous learning, collaborative leadership, and cross-functional teamwork to solve real-world problems.</p>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="bg-slate-900/50">
+            <div class="container mx-auto px-6">
+                <div class="anim-container"><h2 class="section-title">Technical Skills</h2></div>
+                <div class="flex flex-wrap justify-center gap-4 md:gap-6 max-w-5xl mx-auto">
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">C/C++</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">PostgreSQL</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">MySQL</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">SQL</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">R</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">Tableau</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">Flask</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">Google Cloud</div>
+                    <div class="skill-bubble glass-card rounded-lg px-6 py-3 font-medium">AWS</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="container mx-auto px-6">
+                <div class="anim-container"><h2 class="section-title">Projects</h2></div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto" id="project-cards">
+                    <a href="https://auraflaa.github.io/Olist-Customer-Satisfaction-Analysis/" target="_blank" rel="noopener noreferrer" class="block glass-card rounded-lg p-6 flex flex-col hover:border-cyan-400 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Olist Customer Satisfaction Analysis</h3>
+                        <p class="text-slate-400 mb-4 flex-grow">End-to-end data analysis of 100,000 orders to identify key drivers of dissatisfaction. The findings pointed to late deliveries, leading to actionable recommendations.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-cyan-900/50 text-cyan-300 text-sm font-medium px-3 py-1 rounded-full">SQL/BigQuery</span>
+                            <span class="bg-cyan-900/50 text-cyan-300 text-sm font-medium px-3 py-1 rounded-full">R</span>
+                            <span class="bg-cyan-900/50 text-cyan-300 text-sm font-medium px-3 py-1 rounded-full">Tableau</span>
+                        </div>
+                    </a>
+                    <a href="https://github.com/auraflaa/Inventory_Management_DB-Project" target="_blank" rel="noopener noreferrer" class="block glass-card rounded-lg p-6 flex flex-col hover:border-cyan-400 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-2">Inventory Management Database System (Capstone)</h3>
+                        <p class="text-slate-400 mb-4 flex-grow">A solo Flask-based web app with a normalized MySQL schema and RESTful APIs. Features RBAC, security enhancements, and a real-time analytics dashboard. (AI-assisted development).</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-cyan-900/50 text-cyan-300 text-sm font-medium px-3 py-1 rounded-full">Flask</span>
+                            <span class="bg-cyan-900/50 text-cyan-300 text-sm font-medium px-3 py-1 rounded-full">MySQL</span>
+                            <span class="bg-cyan-900/50 text-cyan-300 text-sm font-medium px-3 py-1 rounded-full">RESTful APIs</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Experience & Education Section -->
+        <section id="experience" class="bg-slate-900/50">
+            <div class="container mx-auto px-6">
+                 <div class="anim-container"><h2 class="section-title">My Journey</h2></div>
+                 <div class="relative max-w-2xl mx-auto pl-8 timeline">
+                    <div class="timeline-item mb-12">
+                        <h3 class="text-xl font-bold text-white">B.Tech, Computer Science and Engineering</h3>
+                        <p class="text-cyan-400 font-medium mb-1">RV University</p>
+                        <p class="text-slate-400">Ongoing coursework with focus areas in AI, ML, Data Science, and Cloud Computing. Heavily involved in tech communities and leadership roles.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3 class="text-xl font-bold text-white">Pre-University College</h3>
+                        <p class="text-cyan-400 font-medium mb-1">S.G.P.T.A PU College</p>
+                        <p class="text-slate-400">Contributed to foundational and advanced learning, fostering an environment of academic excellence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Leadership & Certs -->
+        <section id="leadership">
+            <div class="container mx-auto px-6">
+                <div class="anim-container"><h2 class="section-title">Leadership & Learning</h2></div>
+                <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                    <div class="leadership-col">
+                        <h3 class="text-2xl font-bold text-center text-white mb-6">Community Leadership</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-3">
+                            <li>Active member in Google Developer Groups OnCampus and Viksha coding club.</li>
+                            <li>Managed and moderated WhatsApp communities for 800+ students, facilitating events and knowledge sharing.</li>
+                            <li>Experienced in leading teams and organizing tech-focused events.</li>
+                            <li>Passionate about chess, which hones my strategic thinking skills.</li>
+                        </ul>
+                    </div>
+                    <div class="learning-col">
+                        <h3 class="text-2xl font-bold text-center text-white mb-6">Learning Platforms</h3>
+                        <ul class="list-disc list-inside text-slate-300 space-y-3">
+                            <li>Completing specializations and courses on <span class="text-cyan-400">Coursera</span>.</li>
+                            <li>Earning skill badges on <span class="text-cyan-400">Google Cloud Skills Boost</span>.</li>
+                            <li>Participating in competitions and learning on <span class="text-cyan-400">Kaggle</span>.</li>
+                            <li>Publishing data visualizations on <span class="text-cyan-400">Tableau Public</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profiles Section -->
+        <section id="profiles" class="bg-slate-900/50">
+            <div class="container mx-auto px-6">
+                <div class="anim-container"><h2 class="section-title">Find Me On</h2></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto" id="profile-cards">
+                    <!-- Coursera -->
+                    <a href="https://www.coursera.org/user/10de8f4ca45cb85078093228f6379d24" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                         <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.003 3.003c-5.32 0-8.915 3.328-8.915 8.915 0 5.32 3.327 9.085 8.915 9.085 5.235 0 8.915-3.68 8.915-9.085C20.92 6.416 17.41 3.003 12.004 3.003h-.002zm-3.17 12.164v-6.33c0-.416.084-.666.583-.666.5 0 .584.25.584.666v6.33c0 .416-.084.666-.584.666-.5 0-.583-.25-.583-.666zm6.33-2.912c0 1.25-.667 2.08-1.917 2.08-1.166 0-1.833-.667-1.833-2.08v-.583c0-1.334.667-2.08 1.833-2.08 1.25 0 1.917.75 1.917 2.08v.583z"/></svg>
+                        <span class="font-semibold text-white">Coursera</span>
+                    </a>
+                    <!-- Google Cloud Skills Boost -->
+                    <a href="https://www.cloudskillsboost.google/public_profiles/12fa2c63-8425-420b-b49d-6ec8c55ec44e" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                        <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.453.352l-5.83 3.332a.267.267 0 00-.134.231V9.75a.267.267 0 00.134.231l5.83 3.332a.267.267 0 00.267 0l5.83-3.332a.267.267 0 00.134-.231V3.915a.267.267 0 00-.134-.231L12.72.352a.267.267 0 00-.267 0zM21.24 8.783l-5.83 3.331a.267.267 0 01-.267 0L9.313 8.783a.267.267 0 00-.267 0L3.216 12.115a.267.267 0 00-.134.231v6.53a.267.267 0 00.134.231l5.83 3.332a.267.267 0 00.267 0l5.83-3.332a.267.267 0 00.134-.231v-2.086l-2.915-1.666a.267.267 0 01-.134-.231v-2.17a.267.267 0 01.134-.231l2.915-1.666a.267.267 0 00.267 0l5.83-3.332a.267.267 0 00.134-.231v-2.17a.267.267 0 00-.134-.231l-2.915-1.666a.267.267 0 00-.267 0z"/></svg>
+                        <span class="font-semibold text-white">Google Cloud</span>
+                    </a>
+                    <!-- Kaggle -->
+                    <a href="https://www.kaggle.com/priyangshumukherjee" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                         <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14.616 15.384l-2.616-2.616 2.616-2.616 1.848 1.848 3.168-3.168L14.04 1.848 12 0l-2.04 1.848-7.08 7.08 3.168 3.168L1.848 16.296l7.08 7.08L12 21.336l2.04 2.04 7.08-7.08-3.168-3.168-3.336 2.184z"/></svg>
+                        <span class="font-semibold text-white">Kaggle</span>
+                    </a>
+                    <!-- Tableau -->
+                    <a href="https://public.tableau.com/app/profile/priyangshu.mukherjee/vizzes" target="_blank" rel="noopener noreferrer" class="glass-card rounded-lg p-6 flex flex-col items-center justify-center text-center hover:border-cyan-400 transition-all duration-300 space-y-3">
+                        <svg class="w-12 h-12 text-white" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.8 11.52h14.4v2.4H4.8V11.52zm0-6.24h6.24v5.04H4.8V5.28zm7.44 0h6.96v5.04h-6.96V5.28zM4.8 15.12h6.24v5.04H4.8v-5.04zm7.44 0h6.96v5.04h-6.96v-5.04z"/></svg>
+                        <span class="font-semibold text-white">Tableau Public</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="text-center bg-slate-900/50">
+            <div class="container mx-auto px-6">
+                <div class="anim-container"><h2 class="section-title">Get In Touch</h2></div>
+                <p class="max-w-xl mx-auto text-lg text-slate-300 mb-8" id="contact-text">
+                    I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team.
+                </p>
+                <a href="mailto:priyangshu.mukherjee.dev@email.com" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg" id="contact-button">
+                    Say Hello
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <footer class="text-center py-6 border-t border-slate-800">
+        <p class="text-slate-500">&copy; 2025 Priyangshu Mukherjee. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- CURSOR ---
+        const cursorDot = document.querySelector(".cursor-dot");
+        const cursorDotOutline = document.querySelector(".cursor-dot-outline");
+        const hoverables = document.querySelectorAll("a, button, .skill-bubble");
+
+        window.addEventListener("mousemove", function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            gsap.to(cursorDot, { duration: 0.1, x: posX, y: posY });
+            gsap.to(cursorDotOutline, { duration: 0.3, x: posX, y: posY });
+        });
+
+        hoverables.forEach(el => {
+            el.addEventListener("mouseenter", () => {
+                gsap.to(cursorDotOutline, { duration: 0.2, scale: 1.5, borderColor: '#0891b2' });
+            });
+            el.addEventListener("mouseleave", () => {
+                gsap.to(cursorDotOutline, { duration: 0.2, scale: 1, borderColor: '#fff' });
+            });
+        });
+
+        // Particles.js config
+        particlesJS('particles-js', {
+            "particles": { "number": { "value": 60 }, "color": { "value": "#0891b2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.4 }, "size": { "value": 2, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#0e7490", "opacity": 0.3 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" }},
+            "interactivity": { "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": false } }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.7 } } }},
+            "retina_detect": true
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+        
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('header nav a');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) current = section.getAttribute('id');
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) link.classList.add('active');
+            });
+        });
+        
+        // --- GSAP ANIMATIONS ---
+
+        // Hero Animation
+        const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' }});
+        heroTl.from("#hero-img", { opacity: 0, scale: 0.8, duration: 1, delay: 0.2 })
+              .from("#hero-title", { opacity: 0, y: 30, duration: 0.8 }, "-=0.6")
+              .from("#hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+              .from("#hero-links a", { opacity: 0, y: 20, stagger: 0.2, duration: 0.6 }, "-=0.5");
+
+        // Section Title Animation
+        gsap.utils.toArray('.section-title').forEach(title => {
+            gsap.from(title, {
+                scrollTrigger: {
+                    trigger: title,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: 'power3.out'
+            });
+        });
+
+        // About Text Animation
+        gsap.from("#about-text", {
+            scrollTrigger: { trigger: "#about-text", start: 'top 85%' },
+            opacity: 0, y: 30, duration: 1
+        });
+
+        // Skills Animation
+        gsap.from(".skill-bubble", {
+            scrollTrigger: { trigger: "#skills", start: 'top 70%' },
+            opacity: 0, y: 30, stagger: 0.1, duration: 0.5, ease: 'back.out(1.7)'
+        });
+
+        // Projects Animation
+        gsap.from("#project-cards > a", {
+            scrollTrigger: { trigger: "#project-cards", start: 'top 75%' },
+            opacity: 0, y: 50, stagger: 0.2, duration: 0.8, ease: 'power3.out'
+        });
+        
+        // Timeline Animation
+        const timeline = document.querySelector('.timeline');
+        gsap.from(timeline, {
+             scrollTrigger: {
+                 trigger: timeline,
+                 start: 'top 70%',
+                 end: 'bottom 80%',
+                 scrub: 1
+             },
+             scaleY: 0
+        });
+        gsap.utils.toArray('.timeline-item').forEach(item => {
+            gsap.from(item, {
+                scrollTrigger: { trigger: item, start: 'top 85%' },
+                opacity: 0, x: -50, duration: 1, ease: 'power3.out'
+            });
+        });
+        
+        // Leadership & Learning Animation
+        gsap.from(".leadership-col", {
+             scrollTrigger: { trigger: ".leadership-col", start: 'top 80%' },
+             opacity: 0, x: -50, duration: 1
+        });
+        gsap.from(".learning-col", {
+             scrollTrigger: { trigger: ".learning-col", start: 'top 80%' },
+             opacity: 0, x: 50, duration: 1
+        });
+        
+        // Profile Cards Animation
+        gsap.from("#profile-cards > a", {
+            scrollTrigger: { trigger: "#profile-cards", start: 'top 80%' },
+            opacity: 0, y: 40, stagger: 0.15, duration: 0.6, ease: 'power2.out'
+        });
+
+        // Contact Section Animation
+        gsap.from(["#contact-text", "#contact-button"], {
+            scrollTrigger: { trigger: "#contact", start: 'top 75%' },
+            opacity: 0, y: 40, stagger: 0.2, duration: 1
+        });
+
+    </script>
+</body>
+</html>
+
