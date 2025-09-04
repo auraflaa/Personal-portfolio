@@ -57,12 +57,11 @@
 
         .skill-bubble {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; /* Add for stacking context */
+            z-index: 10; /* Ensures hover state is not interrupted */
         }
 
-        .skill-bubble:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.1);
-        }
+        /* The :hover rule has been removed from here and is now handled by GSAP for reliability */
 
         .timeline-item::before {
             content: '';
@@ -141,6 +140,11 @@
             font-weight: 700;
             margin-bottom: 4rem;
             color: #fff;
+        }
+        
+        /* THE FIX: Prevents animation containers from collapsing to zero height when their children are hidden */
+        #project-cards, #profile-cards {
+            min-height: 1px;
         }
         
         /* Hide overflow for animations */
@@ -370,9 +374,29 @@
         hoverables.forEach(el => {
             el.addEventListener("mouseenter", () => {
                 gsap.to(cursorDotOutline, { duration: 0.2, scale: 1.5, borderColor: '#0891b2' });
+                // If the hovered element is a skill bubble, animate it with GSAP
+                if (el.classList.contains('skill-bubble')) {
+                    gsap.to(el, {
+                        duration: 0.3,
+                        scale: 1.1,
+                        y: -5,
+                        boxShadow: '0 10px 20px rgba(0, 255, 255, 0.1)',
+                        ease: 'power2.out'
+                    });
+                }
             });
             el.addEventListener("mouseleave", () => {
                 gsap.to(cursorDotOutline, { duration: 0.2, scale: 1, borderColor: '#fff' });
+                // If the hovered element is a skill bubble, animate it back
+                if (el.classList.contains('skill-bubble')) {
+                    gsap.to(el, {
+                        duration: 0.3,
+                        scale: 1,
+                        y: 0,
+                        boxShadow: '0 0 0 rgba(0, 0, 0, 0)',
+                        ease: 'power2.out'
+                    });
+                }
             });
         });
 
@@ -449,8 +473,16 @@
 
         // Projects Animation
         gsap.from("#project-cards > a", {
-            scrollTrigger: { trigger: "#project-cards", start: 'top 75%' },
-            opacity: 0, y: 50, stagger: 0.2, duration: 0.8, ease: 'power3.out'
+            scrollTrigger: { 
+                trigger: "#projects", // FIX: Trigger is now the parent section, not the collapsing container.
+                start: 'top 70%',
+                toggleActions: 'play none none none'
+            },
+            autoAlpha: 0, 
+            y: 50, 
+            stagger: 0.2, 
+            duration: 0.8, 
+            ease: 'power3.out'
         });
         
         // Timeline Animation
@@ -483,14 +515,36 @@
         
         // Profile Cards Animation
         gsap.from("#profile-cards > a", {
-            scrollTrigger: { trigger: "#profile-cards", start: 'top 80%' },
-            opacity: 0, y: 40, stagger: 0.15, duration: 0.6, ease: 'power2.out'
+            scrollTrigger: { 
+                trigger: "#profiles", // FIX: Trigger is now the parent section.
+                start: 'top 70%',
+                toggleActions: 'play none none none'
+            },
+            autoAlpha: 0,
+            y: 40, 
+            stagger: 0.15, 
+            duration: 0.6, 
+            ease: 'power2.out'
         });
 
         // Contact Section Animation
         gsap.from(["#contact-text", "#contact-button"], {
-            scrollTrigger: { trigger: "#contact", start: 'top 75%' },
-            opacity: 0, y: 40, stagger: 0.2, duration: 1
+            scrollTrigger: { 
+                trigger: "#contact", // This was already correct, but we ensure consistency.
+                start: 'top 70%',
+                toggleActions: 'play none none none'
+            },
+            autoAlpha: 0,
+            y: 40, 
+            stagger: 0.2, 
+            duration: 1
+        });
+
+        // This is a failsafe to ensure calculations are correct after page load.
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                ScrollTrigger.refresh();
+            }, 100); // A 100ms delay is imperceptible but effective.
         });
 
     </script>
