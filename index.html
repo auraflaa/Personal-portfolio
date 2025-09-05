@@ -17,7 +17,7 @@
             cursor: none; /* Hide the default cursor */
         }
         
-        /* Custom Cursor */
+        /* --- MAGNETIC CURSOR --- */
         .cursor-dot, .cursor-dot-outline {
             pointer-events: none;
             position: fixed;
@@ -37,6 +37,7 @@
             height: 40px;
             border: 2px solid #fff;
         }
+        /* --- END MAGNETIC CURSOR --- */
 
         #hero-img {
             object-fit: cover; /* Prevents image distortion */
@@ -147,6 +148,10 @@
         /* Hide overflow for animations */
         .anim-container {
             overflow: hidden;
+        }
+        
+        #contact-button span {
+            display: inline-block;
         }
 
         /* --- Project Card 3D Hover Effect --- */
@@ -330,7 +335,7 @@
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased overflow-x-hidden">
     <div class="cursor-dot-outline"></div>
     <div class="cursor-dot"></div>
 
@@ -561,7 +566,7 @@
                     I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team.
                 </p>
                 <a href="mailto:priyangshumukherjee07@gmail.com" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 text-lg fade-in-initial" id="contact-button">
-                    Say Hello
+                    <span>S</span><span>a</span><span>y</span><span>&nbsp;</span><span>H</span><span>e</span><span>l</span><span>l</span><span>o</span>
                 </a>
             </div>
         </section>
@@ -804,6 +809,31 @@
                 }
             });
         });
+        
+        // --- "Say Hello" Button Animation ---
+        const contactButton = document.getElementById('contact-button');
+        contactButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const letters = contactButton.querySelectorAll('span');
+            const href = contactButton.getAttribute('href');
+
+            gsap.timeline()
+                .to(letters, {
+                    y: -20,
+                    stagger: {
+                        each: 0.05,
+                        from: "start",
+                        ease: "power2.inOut"
+                    },
+                    repeat: 1,
+                    yoyo: true,
+                    duration: 0.3
+                })
+                .add(() => {
+                    window.location.href = href;
+                }, "+=0.2");
+        });
+
 
         // --- 3D Tilt Effect for Project Cards ---
         VanillaTilt.init(document.querySelectorAll(".project-card"), {
