@@ -1,4 +1,13 @@
+<div align="center">
+
 # Priyangshu Mukherjee - Personal Portfolio Website
+
+
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![HTML](https://img.shields.io/badge/HTML-Static-orange.svg)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+
+</div>
+
+---
 
 This repository contains the source code for the personal portfolio website of Priyangshu Mukherjee, a Computer Science and Engineering student. The website is a fully responsive, single-page application designed to be a dynamic and engaging showcase of his skills, projects, experience, and professional profiles.
 
